@@ -130,8 +130,8 @@ GoogleMapViewController.prototype = {
         MapViewController.prototype.showPOIs.call(this, position);
 
         /* Retrieve latitude and longitude from google.maps.LatLng */
-        var plat = position.d;
-        var plon = position.e;
+        var plat = position.lat();
+        var plon = position.lng();
 
         /* Show random positioned markers */
         var self = this;
