@@ -76,8 +76,7 @@ OpenStreetMapViewController.prototype = {
         if (this.currentPosition === null) { // if this is the first time this method is invoked
 
             /* Add a marker to the center */
-            var markerIcon = new OpenLayers.Icon('img/marker.png');
-            this.markers.addMarker(new OpenLayers.Marker(osmPosition, markerIcon));
+            this.markers.addMarker(new OpenLayers.Marker(osmPosition));
 
             /* Show POIs only the first time this method is called */
             this.showPOIs(new OpenLayers.LonLat(plon, plat));
@@ -165,7 +164,7 @@ OpenStreetMapViewController.prototype = {
             var lon = plon - 0 + (Math.random() * 0.01) - 0.005;
             var lat = plat - 0 + (Math.random() * 0.01) - 0.005;
             var mposition = new OpenLayers.LonLat(lon, lat).transform(self.fromProjection, self.toProjection);
-            var markerIcon = new OpenLayers.Icon('img/marker-green.png');
+            var markerIcon = new OpenLayers.Icon('http://openlayers.org/api/img/marker-green.png');
             var marker = new OpenLayers.Marker(mposition, markerIcon);
 
             marker.popup = new OpenLayers.Popup.FramedCloud("osmpopup",
