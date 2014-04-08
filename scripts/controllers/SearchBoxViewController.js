@@ -98,7 +98,12 @@ SearchBoxViewController.prototype = {
 
         window.mContactManager.getAllContacts(function(contact) {
             if (contact.note) {
-                self.search(contact.note[0], contact.photo[0], false);
+                if (contact.photo) {
+                    self.search(contact.note[0], contact.photo[0]);
+                }
+                else {
+                    self.search(contact.note[0]);
+                }
             }
         });
     },
