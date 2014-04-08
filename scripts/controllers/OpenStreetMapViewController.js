@@ -55,7 +55,7 @@ OpenStreetMapViewController.prototype = {
 
         /* Initialize event handlers */
         this.searchButton.onclick = function() {
-            self.search(self.searchInput.value, 'libs/OpenLayers/img/marker.png', true);
+            window.mSearchBoxViewController.search(self.searchInput.value, 'libs/OpenLayers/img/marker.png', true);
             return false;
         };
     },

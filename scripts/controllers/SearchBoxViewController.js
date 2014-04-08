@@ -41,6 +41,31 @@ SearchBoxViewController.prototype = {
     search: function(query, markerImage, showPOIs) {
         console.log('SearchBoxViewController.search(' + query + ')');
 
+        var self = this;
+
+        var contactName = this.contactSearchInput.value;
+        if (contactName !== '') {
+            window.mContactManager.findContact({
+                filterBy: ['name'],
+                filterValue: contactName,
+                filterOp: 'equals'
+            }, function(contactsFound) {
+                if (contactsFound.length > 0) {
+                    var contact = contactsFound[0];
+
+                    // update the contact
+                    window.mContactManager.updateAddress(contact, query, function() {
+                        alert("address updated");
+                    }, function() {
+                        alert("error in updating address");
+                    });
+                }
+                else {
+                    alert(contactName + ' not found in address book');
+                }
+            });
+        }
+
         /* Perform the search if a query is specified */
         if (query) {
             window.mMapViewController.search(query, markerImage, showPOIs);
@@ -75,7 +100,7 @@ SearchBoxViewController.prototype = {
                         self.search(contact.note[0], contact.photo[0], false);
                     }
                     else {
-                        // TODO: ask to insert a address
+                        alert(contact.name[0] + " has not provided a address. You can now insert a address by searching it.");
                     }
                 }
                 else {

@@ -63,7 +63,7 @@ function addContact(contact) {
         filterValue: contact.name + ' ' + contact.surname,
         filterOp: 'equals'
     }, function(contactsFound) {
-        
+
         /* Get contact photo */
         var xhr = new XMLHttpRequest();
 
@@ -83,6 +83,10 @@ function addContact(contact) {
                     nickname: [contact.nickname],
                     photo: [contactPhoto],
                     note: [contact.location]
+                }, function() {
+                    // do nothing
+                }, function() {
+                    // do nothing
                 });
             }
             else {
