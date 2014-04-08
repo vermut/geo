@@ -1,0 +1,23 @@
+{
+  "name": "Geo",
+  "description": "Geolocation web application",
+  "type": "privileged",
+  "icons": {
+    "128": "/public_html/img/icon-128.png"
+  },
+  "launch_path": "/index.html",
+  "permissions": {
+    "geolocation": {
+      "description": "Required for autocompletion in the share screen"
+    },
+    "contacts": {
+      "description": "Required for plotting contacts on the map",
+      "access": "readcreate"
+    }
+  },
+  "developer": {
+    "name": "Francesco Iovine",
+    "url": "http://www.francesco.iovine.name"
+  },
+  "default_locale": "en"
+}

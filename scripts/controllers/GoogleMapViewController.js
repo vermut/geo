@@ -4,7 +4,7 @@ function GoogleMapViewController(options) { // extends MapViewController
 
     /* Initialize superclass attributes */
     this.searchInput = document.querySelector('#googleSearch input');
-
+    
     /* Initialize GoogleMapViewController attributes */
     this.searchBox = null;
 }
@@ -31,6 +31,9 @@ GoogleMapViewController.prototype = {
         /* Show the map */
         var gmPosition = new google.maps.LatLng(this.defaultPosition.coords.latitude, this.defaultPosition.coords.longitude);
         this.map.setCenter(gmPosition);
+
+        /* Clear search input value */
+        this.searchInput.value = '';
     },
     /*
      * initSearchBox

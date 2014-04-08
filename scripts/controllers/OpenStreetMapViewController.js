@@ -40,6 +40,9 @@ OpenStreetMapViewController.prototype = {
         /* Show the map */
         var osmPosition = new OpenLayers.LonLat(this.defaultPosition.coords.longitude, this.defaultPosition.coords.latitude).transform(this.fromProjection, this.toProjection);
         this.map.setCenter(osmPosition, this.defaultZoom);
+
+        /* Clear search input value */
+        this.searchInput.value = '';
     },
     /*
      * initSearchBox
@@ -52,7 +55,7 @@ OpenStreetMapViewController.prototype = {
 
         /* Initialize event handlers */
         this.searchButton.onclick = function() {
-            self.search(self.searchInput.value);
+            self.search(self.searchInput.value, true);
             return false;
         };
     },
@@ -76,7 +79,8 @@ OpenStreetMapViewController.prototype = {
         if (this.currentPosition === null) { // if this is the first time this method is invoked
 
             /* Add a marker to the center */
-            this.markers.addMarker(new OpenLayers.Marker(osmPosition));
+            var markerIcon = new OpenLayers.Icon('libs/OpenLayers/img/marker.png');
+            this.markers.addMarker(new OpenLayers.Marker(osmPosition, markerIcon));
 
             /* Show POIs only the first time this method is called */
             this.showPOIs(new OpenLayers.LonLat(plon, plat));
@@ -99,8 +103,12 @@ OpenStreetMapViewController.prototype = {
      * Perform the search based on the specified query
      * @param {String} query
      */
-    search: function(query) {
+    search: function(query, showPOIs) {
         MapViewController.prototype.search.call(this, query);
+
+        if (query === undefined || query === '') {
+            return;
+        }
 
         /* Prepare AJAX communication with nominatim */
         var xhr = new XMLHttpRequest();
@@ -127,20 +135,24 @@ OpenStreetMapViewController.prototype = {
                 var rlat = response[0].lat - 0;
 
                 var position = new OpenLayers.LonLat(rlon, rlat).transform(self.fromProjection, self.toProjection);
-                var marker = new OpenLayers.Marker(position);
-
+                var markerIcon = new OpenLayers.Icon('libs/OpenLayers/img/marker.png');
+                var marker = new OpenLayers.Marker(position, markerIcon);
 
                 /* Set the center of the map */
                 self.map.setCenter(position);
 
                 /* Add a marker on the place found */
                 self.markers.addMarker(marker);
+                var newBound = self.markers.getDataExtent();
+                self.map.zoomToExtent(newBound);
 
                 /* Display points of interest around the position */
-                self.showPOIs(new OpenLayers.LonLat(rlon, rlat));
+                if (showPOIs) {
+                    self.showPOIs(new OpenLayers.LonLat(rlon, rlat));
+                }
 
                 /* Print place found */
-                self.searchInput.value = response[0].display_name;
+                self.searchInput.value = response[0].display_name;                
             }
         };
 
@@ -164,7 +176,7 @@ OpenStreetMapViewController.prototype = {
             var lon = plon - 0 + (Math.random() * 0.01) - 0.005;
             var lat = plat - 0 + (Math.random() * 0.01) - 0.005;
             var mposition = new OpenLayers.LonLat(lon, lat).transform(self.fromProjection, self.toProjection);
-            var markerIcon = new OpenLayers.Icon('http://openlayers.org/api/img/marker-green.png');
+            var markerIcon = new OpenLayers.Icon('libs/OpenLayers/img/marker-green.png');
             var marker = new OpenLayers.Marker(mposition, markerIcon);
 
             marker.popup = new OpenLayers.Popup.FramedCloud("osmpopup",

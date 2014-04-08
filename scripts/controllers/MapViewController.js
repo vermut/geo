@@ -72,6 +72,11 @@ MapViewController.prototype = {
     search: function(query) {
         console.log('MapViewController.search(query)');
         console.log(query);
+        
+        /* Perform the search if a query is specified */
+        if (query === undefined || query === '') {
+            alert("Please insert a address");
+        }
     },
     /*
      * showPOIs
