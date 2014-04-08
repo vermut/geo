@@ -96,7 +96,7 @@
 }
 
 .actionBox > div.searchBox #nominatimSearch {
-    display:none;
+    display:block;
     width: 100%;
 }
 
@@ -129,4 +129,20 @@
 .actionBox > div.searchBox #hybridSearch input{
     height: 2.4em;
     width: 100%;
+}
+
+.actionBox > div.searchBox #contactSearch {
+    display:none;
+    width: 100%;
+}
+
+.actionBox > div.searchBox #contactSearch input {
+    height: 2.4em;
+    width: 97%;
+}
+
+.actionBox > div.searchBox #contactSearch button {
+    width: 100%;
+    background: navy;
+    color: white;
 }
