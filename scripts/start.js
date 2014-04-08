@@ -26,7 +26,7 @@ function initContacts() {
                 "name": "Chris",
                 "surname": "Mills",
                 "nickname": "chrisdavidmills",
-                "photo": "img/chrisdavidmills.jpeg",
+                "photo": "img/chrisdavidmills.jpg",
                 "location": "Oldham, UK"
             },
             {
@@ -58,36 +58,40 @@ function addContact(contact) {
     console.log('addContact(contact)');
     console.log(contact);
 
-//    var reader = new FileReader();
-//
-//    reader.onload = function(progressEvent) {
-//        
-//        var photoBlob = progressEvent.target.result;
-//        console.log(photoBlob);
+    window.mContactManager.findContact({
+        filterBy: ['name'],
+        filterValue: contact.name + ' ' + contact.surname,
+        filterOp: 'equals'
+    }, function(contactsFound) {
+        
+        /* Get contact photo */
+        var xhr = new XMLHttpRequest();
 
-        window.mContactManager.findContact({
-            filterBy: ['name'],
-            filterValue: contact.name + ' ' + contact.surname,
-            filterOp: 'equals'
-        }, function(contactsFound) {
+        xhr.open("GET", contact.photo, true);
+        xhr.responseType = "arraybuffer";
+
+        xhr.onload = function(e) {
+            var arrayBufferView = new Uint8Array(this.response);
+            var contactPhoto = new Blob([arrayBufferView], {type: "image/jpeg"});
+
             if (contactsFound.length === 0) {
+                /* Add contact */
                 window.mContactManager.addContact({
                     name: [contact.name + ' ' + contact.surname],
                     givenName: [contact.name],
                     familyName: [contact.surname],
                     nickname: [contact.nickname],
-//                    photo: [contact.photo],
+                    photo: [contactPhoto],
                     note: [contact.location]
                 });
             }
             else {
                 console.log(contact.name + ' ' + contact.surname + ' already exists');
             }
-        });
-//    };
-//
-//    console.log(contact.photo);
-//    reader.readAsDataURL(contact.photo);
+        };
+
+        xhr.send();
+    });
 }
 
 

@@ -69,9 +69,11 @@ MapViewController.prototype = {
      * Perform the search based on the specified query
      * @param {String} query
      */
-    search: function(query) {
+    search: function(query, markerImage, showPOIs) {
         console.log('MapViewController.search(query)');
         console.log(query);
+        console.log(markerImage);
+        console.log(showPOIs);
         
         /* Perform the search if a query is specified */
         if (query === undefined || query === '') {

@@ -13,7 +13,7 @@ function SearchBoxViewController() {
     this.contactDatalist = this.contactSearch.querySelector('#contacts');
 
     this.contactShowAllButton = this.contactSearch.querySelector('button#contactShowAllBtn');
-    
+
     var self = this;
 
     /* Initialize event handlers */
@@ -38,12 +38,12 @@ SearchBoxViewController.prototype = {
      * Submit the query to the search engine of the map displayed and show the search results on the map
      * @param {String} query
      */
-    search: function(query) {
+    search: function(query, markerImage, showPOIs) {
         console.log('SearchBoxViewController.search(' + query + ')');
 
         /* Perform the search if a query is specified */
         if (query) {
-            window.mMapViewController.search(query);
+            window.mMapViewController.search(query, markerImage, showPOIs);
         }
         else {
             alert("Please insert a address");
@@ -68,10 +68,11 @@ SearchBoxViewController.prototype = {
             }, function(contactsFound) {
                 if (contactsFound.length > 0) {
                     var contact = contactsFound[0];
-                    console.log(contact);
+
                     self.contactSearchInput.value = contact.name[0];
+
                     if (contact.note) {
-                        self.search(contact.note);
+                        self.search(contact.note[0], contact.photo[0], false);
                     }
                     else {
                         // TODO: ask to insert a address
@@ -94,9 +95,11 @@ SearchBoxViewController.prototype = {
         console.log('SearchBoxViewController.showAllContacts()');
 
         var self = this;
-        
+
         window.mContactManager.getAllContacts(function(contact) {
-            self.search(contact.note);
+            if (contact.note) {
+                self.search(contact.note[0], contact.photo[0], false);
+            }
         });
     },
     /*

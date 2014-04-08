@@ -55,7 +55,7 @@ OpenStreetMapViewController.prototype = {
 
         /* Initialize event handlers */
         this.searchButton.onclick = function() {
-            self.search(self.searchInput.value, true);
+            self.search(self.searchInput.value, 'libs/OpenLayers/img/marker.png', true);
             return false;
         };
     },
@@ -103,8 +103,8 @@ OpenStreetMapViewController.prototype = {
      * Perform the search based on the specified query
      * @param {String} query
      */
-    search: function(query, showPOIs) {
-        MapViewController.prototype.search.call(this, query);
+    search: function(query, markerImage, showPOIs) {
+        MapViewController.prototype.search.call(this, query, markerImage, showPOIs);
 
         if (query === undefined || query === '') {
             return;
@@ -135,24 +135,29 @@ OpenStreetMapViewController.prototype = {
                 var rlat = response[0].lat - 0;
 
                 var position = new OpenLayers.LonLat(rlon, rlat).transform(self.fromProjection, self.toProjection);
-                var markerIcon = new OpenLayers.Icon('libs/OpenLayers/img/marker.png');
+                var markerIcon = new OpenLayers.Icon((markerImage instanceof Blob) ? window.URL.createObjectURL(markerImage) : 'libs/OpenLayers/img/marker.png');
                 var marker = new OpenLayers.Marker(position, markerIcon);
 
                 /* Set the center of the map */
                 self.map.setCenter(position);
 
-                /* Add a marker on the place found */
-                self.markers.addMarker(marker);
-                var newBound = self.markers.getDataExtent();
-                self.map.zoomToExtent(newBound);
-
-                /* Display points of interest around the position */
                 if (showPOIs) {
+                    /* Remove existing markers */
+                    self.markers.clearMarkers();
+
+                    /* Display points of interest around the position */
                     self.showPOIs(new OpenLayers.LonLat(rlon, rlat));
+
+                    /* Print place found */
+                    self.searchInput.value = response[0].display_name;
                 }
 
-                /* Print place found */
-                self.searchInput.value = response[0].display_name;                
+                /* Add a marker on the place found */
+                self.markers.addMarker(marker);
+                
+                /* Adapt map zoom */
+                var newBound = self.markers.getDataExtent();
+                self.map.zoomToExtent(newBound);
             }
         };
 
