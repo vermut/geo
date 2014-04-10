@@ -140,15 +140,19 @@ OpenStreetMapViewController.prototype = {
                 var rlon = response[0].lon - 0;
                 var rlat = response[0].lat - 0;
                 var position = new OpenLayers.LonLat(rlon, rlat).transform(self.fromProjection, self.toProjection);
+                                
+                var markerDescription = response[0].display_name;            
+                if (contact) {
+                    markerDescription = contact.name[0] + '<br/>' + contact.note[0];
+                }
+                else {
+                    /* Print place found */
+                    self.searchInput.value = markerDescription;
+                }
 
                 var markerImage = 'libs/OpenLayers/img/marker.png';
                 if (contact && contact.photo) {
                     markerImage = window.URL.createObjectURL(contact.photo[0]);
-                }
-
-                var markerDescription = response[0].display_name;
-                if (contact) {
-                    markerDescription = contact.name[0] + '<br/>' + contact.note[0];
                 }
 
                 var markerIcon = new OpenLayers.Icon(markerImage);
@@ -156,14 +160,6 @@ OpenStreetMapViewController.prototype = {
 
                 /* Set the center of the map */
                 self.map.setCenter(position);
-
-                if (contact === null) {
-                    /* Remove existing markers */
-                    self.markers.clearMarkers();
-
-                    /* Print place found */
-                    self.searchInput.value = markerDescription;
-                }
 
                 /* Add a marker on the place found */
                 self.markers.addMarker(marker);
