@@ -67,9 +67,9 @@ MapViewController.prototype = {
     /*
      * search
      * Perform the search based on the specified query
-     * @param {String} query
+     * @param {String || mozContact} query
      */
-    search: function(query, markerImage, showPOIs) {
+    search: function(query) {
         console.log('MapViewController.search(query)');
         console.log(query);
         

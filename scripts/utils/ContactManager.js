@@ -15,6 +15,16 @@ ContactManager.prototype = {
         }
         return false;
     },
+    isContact: function(contact) {
+        
+        if (this.isContactsApiSupported()) {
+            if (contact instanceof mozContact) {
+                return true;
+            }
+        }
+        
+        return false;
+    },
     addContact: function(contactData, successCallBack, errorCallback) {
         console.log('ContactsManager.addContact(contactData, successCallBack, errorCallback)');
         console.log(contactData);

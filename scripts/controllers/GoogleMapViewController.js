@@ -151,7 +151,7 @@ GoogleMapViewController.prototype = {
             });
 
             marker.infowindow = new google.maps.InfoWindow();
-            marker.content = 'place ' + i;
+            marker.content = 'point of interest ' + i;
 
             google.maps.event.addListener(marker, 'click', function() {
                 this.infowindow.setContent(this.content);

@@ -109,10 +109,10 @@ OpenStreetMapViewController.prototype = {
         if (query === undefined || query === '') {
             return;
         }
-        
+
         var contact = null;
-        if (query instanceof mozContact) {
-            contact = query;            
+        if (window.mContactManager.isContact(query)) {
+            contact = query;
             query = query.note[0];
         }
 
@@ -139,13 +139,16 @@ OpenStreetMapViewController.prototype = {
                 /* Take the first result and get geo infos */
                 var rlon = response[0].lon - 0;
                 var rlat = response[0].lat - 0;
-
                 var position = new OpenLayers.LonLat(rlon, rlat).transform(self.fromProjection, self.toProjection);
 
                 var markerImage = 'libs/OpenLayers/img/marker.png';
-
                 if (contact && contact.photo) {
                     markerImage = window.URL.createObjectURL(contact.photo[0]);
+                }
+
+                var markerDescription = response[0].display_name;
+                if (contact) {
+                    markerDescription = contact.name[0] + '<br/>' + contact.note[0];
                 }
 
                 var markerIcon = new OpenLayers.Icon(markerImage);
@@ -154,29 +157,12 @@ OpenStreetMapViewController.prototype = {
                 /* Set the center of the map */
                 self.map.setCenter(position);
 
-                if (contact) {
-                    /* Add a popup window */
-                    marker.popup = new OpenLayers.Popup.FramedCloud("osmpopup",
-                            position,
-                            new OpenLayers.Size(200, 200),
-                            '<p>' + contact.name[0] + '</p><p>' + contact.note[0] + '</p>'  ,
-                            null,
-                            true);
-
-                    marker.events.register("click", marker, function(e) {
-
-                        self.map.addPopup(this.popup);
-                    });
-                }
-                else {
+                if (contact === null) {
                     /* Remove existing markers */
                     self.markers.clearMarkers();
 
-                    /* Display points of interest around the position */
-                    self.showPOIs(new OpenLayers.LonLat(rlon, rlat));
-
                     /* Print place found */
-                    self.searchInput.value = response[0].display_name;
+                    self.searchInput.value = markerDescription;
                 }
 
                 /* Add a marker on the place found */
@@ -185,6 +171,24 @@ OpenStreetMapViewController.prototype = {
                 /* Adapt map zoom */
                 var newBound = self.markers.getDataExtent();
                 self.map.zoomToExtent(newBound);
+
+                /* Add a popup window */
+                marker.popup = new OpenLayers.Popup.FramedCloud("osmpopup",
+                        position,
+                        new OpenLayers.Size(200, 200),
+                        markerDescription,
+                        null,
+                        true);
+
+                marker.events.register("click", marker, function(e) {
+                    self.map.addPopup(this.popup);
+                });
+                
+                if (contact === null) {
+                    /* Display points of interest around the position */
+                    self.showPOIs(new OpenLayers.LonLat(rlon, rlat));
+                }
+
             }
         };
 
@@ -214,7 +218,7 @@ OpenStreetMapViewController.prototype = {
             marker.popup = new OpenLayers.Popup.FramedCloud("osmpopup",
                     mposition,
                     new OpenLayers.Size(200, 200),
-                    "place " + i,
+                    "point of interest " + i,
                     null,
                     true);
 
