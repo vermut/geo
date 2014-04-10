@@ -11,6 +11,7 @@
     border-style: solid;
     border-color: lightskyblue;
     padding: 1em;
+    opacity: 0.9;
 }
 
 
@@ -94,55 +95,47 @@
 
 .actionBox > div.searchBox {
 }
-
-.actionBox > div.searchBox #nominatimSearch {
-    display:block;
+.actionBox > div.searchBox > div {
     width: 100%;
 }
-
-.actionBox > div.searchBox #nominatimSearch input {
-    height: 2.4em;
-    width: 97%;
+.actionBox > div.searchBox > div > div {
+    width: 100%;
 }
-
-.actionBox > div.searchBox #nominatimSearch button {
+.actionBox > div.searchBox input {
+    height: 2.4em;
+    width: 100%;
+}
+.actionBox > div.searchBox datalist {
+    height: 2.4em;
+    width: 98%;
+}
+.actionBox > div.searchBox button {
+    display: block;
     width: 100%;
     background: navy;
     color: white;
 }
 
-.actionBox > div.searchBox #googleSearch {
-    display:none;
-    width: 100%;
+.actionBox > div.searchBox #nominatimSearch {
+    display:block;
+}
+.actionBox > div.searchBox #nominatimSearch input {
+    width: 98%;
 }
 
-.actionBox > div.searchBox #googleSearch input{
-    height: 2.4em;
-    width: 100%;
+.actionBox > div.searchBox #googleSearch {
+    display:none;
 }
 
 .actionBox > div.searchBox #hybridSearch {
     display:none;
-    width: 100%;
-}
-
-.actionBox > div.searchBox #hybridSearch input{
-    height: 2.4em;
-    width: 100%;
 }
 
 .actionBox > div.searchBox #contactSearch {
     display:none;
     width: 100%;
 }
-
 .actionBox > div.searchBox #contactSearch input {
     height: 2.4em;
-    width: 97%;
-}
-
-.actionBox > div.searchBox #contactSearch button {
-    width: 100%;
-    background: navy;
-    color: white;
+    width: 98%;
 }
