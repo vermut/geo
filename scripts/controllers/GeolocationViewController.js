@@ -1,6 +1,6 @@
 
 function GeolocationViewController() {
-    console.log('SearchBoxViewController()');
+    console.log('GeolocationViewController()');
 
     /* Initialize DOM objects */
     this.currentPositionButton = document.querySelector('#currentPositionBtn');

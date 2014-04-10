@@ -9,52 +9,74 @@ function ContactManager() {
 
 ContactManager.prototype = {
     isContactsApiSupported: function() {
-        
+
         if (this.mozContactManager) {
             return true;
         }
         return false;
     },
     isContact: function(contact) {
-        
+
         if (this.isContactsApiSupported()) {
             if (contact instanceof mozContact) {
                 return true;
             }
         }
-        
+
         return false;
     },
-    addContact: function(contactData, successCallBack, errorCallback) {
-        console.log('ContactsManager.addContact(contactData, successCallBack, errorCallback)');
-        console.log(contactData);
-        
+    addContact: function(contact, successCallBack, errorCallback) {
+        console.log('ContactsManager.addContact(contact, successCallBack, errorCallback)');
+        console.log(contact);
+
         if (this.isContactsApiSupported() === false) {
+            errorCallback();
             return;
         }
 
-        var saving = this.mozContactManager.save(new mozContact(contactData));
+        var self = this;
 
-        saving.onsuccess = function() {
-            console.log('new contact saved');
-            successCallBack();
-        };
+        window.mContactManager.findContact({
+            filterBy: ['name'],
+            filterValue: contact.name,
+            filterOp: 'equals'
 
-        saving.onerror = function(error) {
-            console.log(error);
+        }, function(contactsFound) { // success callback
+
+            if (contactsFound.length === 0) {
+                /* Add contact */
+
+                var saving = self.mozContactManager.save(new mozContact(contact));
+
+                saving.onsuccess = function() {
+                    console.log('new contact saved');
+                    successCallBack();
+                };
+
+                saving.onerror = function(error) {
+                    console.log(error);
+                    errorCallback();
+                };
+            }
+            else {
+                console.log(contact.name + ' already exists');
+            }
+
+        }, function() { // error callback
             errorCallback();
-        };
+            return;
+        });
     },
     updateAddress: function(contact, address, successCallBack, errorCallback) {
         console.log('ContactsManager.updateAddress(contact, address, successCallBack, errorCallback)');
         console.log(contact);
         console.log(address);
-        
+
         if (this.isContactsApiSupported() === false) {
             return;
         }
-        
-        contact.note = [address];
+
+        contact.adr = [address];
 
         var saving = this.mozContactManager.save(contact);
 
@@ -68,11 +90,28 @@ ContactManager.prototype = {
             errorCallback();
         };
     },
+    contactAddressToString: function(contact) {
+        /* Build a query search string */
+        var contactAddress = contact.adr[0];
+        var addressString = '';
+        
+        console.log(contactAddress);
+        console.log(contactAddress.toString());
+        
+        addressString += contactAddress.streetAddress ? (contactAddress.streetAddress + ' ') : '';
+        addressString += contactAddress.locality ? (contactAddress.locality + ' ') : '';
+        addressString += contactAddress.region ? (contactAddress.region + ' ') : '';
+        addressString += contactAddress.postalCode ? (contactAddress.postalCode + ' ') : '';
+        addressString += contactAddress.countryName ? (contactAddress.countryName + ' ') : '';
+        
+        return addressString;
+    },
     findContact: function(filter, successCallback, errorCallback) {
         console.log('ContactsManager.findContact(filter)');
         console.log(filter);
-        
+
         if (this.isContactsApiSupported() === false) {
+            errorCallback();
             return;
         }
 
@@ -85,12 +124,14 @@ ContactManager.prototype = {
 
         request.onerror = function() {
             console.log('findContact error');
+            errorCallback();
         };
     },
     getAllContacts: function(successCallback, errorCallback) {
         console.log('ContactsManager.getAllContacts()');
-        
+
         if (this.isContactsApiSupported() === false) {
+            errorCallback();
             return;
         }
 
@@ -109,11 +150,12 @@ ContactManager.prototype = {
 
         allContacts.onerror = function() {
             console.log('getAllContacts error');
+            errorCallback();
         };
     },
     removeContact: function(contact) {
         console.log('ContactsManager.removeContact()');
-        
+
         if (this.isContactsApiSupported() === false) {
             return;
         }
@@ -130,7 +172,7 @@ ContactManager.prototype = {
     },
     clearContacts: function() {
         console.log('ContactsManager.clearContacts()');
-        
+
         if (this.isContactsApiSupported() === false) {
             return;
         }

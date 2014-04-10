@@ -1,6 +1,6 @@
 
 function SearchBoxViewController() {
-    console.log('GeolocationViewController()');
+    console.log('SearchBoxViewController()');
 
     /* Initialize DOM objects */
     this.nominatimSearch = document.querySelector('#nominatimSearch');
@@ -27,11 +27,15 @@ function SearchBoxViewController() {
         return false;
     };
 
+    self.showContactSearch(); // TODO: css
+
+    /* Init contact search if address book is not empty */
     window.mContactManager.getAllContacts(function(contact) {
-        self.showContactSearch();
+        console.log("Retrieving contact from the address book");
         self.contactDatalist.innerHTML = self.contactDatalist.innerHTML + '<option>' + contact.name + '</option>';
     }, function() {
-        alert("Error in retrieving contacts from the address book");
+        console.log("Error in retrieving contacts from the address book");
+        self.hideContactSearch();
     });
 }
 
@@ -44,8 +48,6 @@ SearchBoxViewController.prototype = {
     search: function(query) {
         console.log('SearchBoxViewController.search(' + query + ')');
 
-        var self = this;
-
         var contactName = this.contactSearchInput.value;
 
         if (contactName !== '' && query instanceof String) {
@@ -53,11 +55,11 @@ SearchBoxViewController.prototype = {
                 filterBy: ['name'],
                 filterValue: contactName,
                 filterOp: 'equals'
-            }, function(contactsFound) {
+            }, function(contactsFound) { // success callback
                 if (contactsFound.length > 0) {
                     var contact = contactsFound[0];
 
-                    if (contact.note) {
+                    if (contact.adr) {
                         console.log(contactName + ' has already an address');
                     }
                     else {
@@ -72,6 +74,8 @@ SearchBoxViewController.prototype = {
                 else {
                     alert(contactName + ' not found in address book');
                 }
+            }, function() { // error callback
+
             });
         }
 
@@ -99,13 +103,13 @@ SearchBoxViewController.prototype = {
                 filterBy: ['name'],
                 filterValue: query,
                 filterOp: 'contains'
-            }, function(contactsFound) {
+            }, function(contactsFound) { // success callback
                 if (contactsFound.length > 0) {
                     var contact = contactsFound[0];
 
                     self.contactSearchInput.value = contact.name[0];
 
-                    if (contact.note) {
+                    if (contact.adr) {
                         self.search(contact);
                     }
                     else {
@@ -115,6 +119,8 @@ SearchBoxViewController.prototype = {
                 else {
                     alert(query + ' not found in address book');
                 }
+            }, function() { // error callback
+
             });
         }
         else {
@@ -131,7 +137,7 @@ SearchBoxViewController.prototype = {
         var self = this;
 
         window.mContactManager.getAllContacts(function(contact) {
-            if (contact.note) {
+            if (contact.adr) {
                 self.search(contact);
             }
         });
@@ -147,12 +153,20 @@ SearchBoxViewController.prototype = {
         this.nominatimSearch.style.display = 'block';
     },
     /*
-     * showGoogleSearch
-     * Show the Google search UI
+     * showContactSearch
+     * Show the contact search UI
      */
     showContactSearch: function() {
         console.log('SearchBoxViewController.showContactSearch()');
         this.contactSearch.style.display = 'block';
+    },
+    /*
+     * hideContactSearch
+     * Hide the contact search UI
+     */
+    hideContactSearch: function() {
+        console.log('SearchBoxViewController.showContactSearch()');
+        this.contactSearch.style.display = 'none';
     },
     /*
      * showGoogleSearch

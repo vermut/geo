@@ -12,89 +12,72 @@ function init() {
     initContacts();
 }
 
-
 /*
- * David Bruant, Priyanka Nag, Kaustav Das Modak, Saurabh Nair, Francesco Iovine, Andrzej Mazur, Shafiul Azam Chowdhury, Isac Lagerblad, Fábio Magnoni, Majken Connor, Julien Gattelier, Frédéric Bourgeon, Thierry Régagnon, Jesús Pérez, Jerome Loi, Jeremie Patonnier, Havi Hoffman, Luke Crouch, Maris Fogels, John Karahalis, David Walsh, Eric Shepherd, Janet Swisher, Robert Nyman, Christian Heilmann, Florian Scholtz, Jannis Leidel, Jean-Yves Perrier, Chris Mills, Holly Habstritt, Josh Mize, Ricky Rosario, Rob Hudson, & Tony Santos
+ * Add default contacts
  */
-
 function initContacts() {
     console.log('initContacts()');
 
-    var contacts = {
-        "mdnWordWeekendParis": [
-            {
-                "name": "Chris",
-                "surname": "Mills",
-                "nickname": "chrisdavidmills",
-                "photo": "img/chrisdavidmills.jpg",
-                "location": "Oldham, UK"
-            },
-            {
-                "name": "Andrzej",
-                "surname": "Mazur",
-                "nickname": "end3r",
-                "photo": "img/end3r.jpeg",
-                "location": "Warsaw, Poland"
-            },
-            {
-                "name": "Francesco",
-                "surname": "Iovine",
-                "nickname": "franciov",
-                "photo": "img/franciov.jpeg",
-                "location": "Rome, Italy"
-            }
-        ]
-    };
+    /* Add default contacts */
 
-    for (var i = 0; i < contacts.mdnWordWeekendParis.length; i++) {
-        var contact = contacts.mdnWordWeekendParis[i];
-        console.log(contact);
-        addContact(contact);
-    }
-}
+    JS.getBlobFromImagePath("img/end3r.jpeg", function(blob) {
 
+        /* Add default contacts to the address book */
+        window.mContactManager.addContact({
+            name: ["Andrzej Mazur"],
+            givenName: ["Andrzej"],
+            familyName: ["Mazur"],
+            nickname: ["end3r"],
+            photo: [blob],
+            adr: [{
+                    locality: "Warsaw",
+                    countryName: "Poland"
+                }]
+        },
+        function() {
+            console.log('Contact added successfully');
+        }, function() {
+            console.log('Error adding contact to the address book');
+        });
 
-function addContact(contact) {
-    console.log('addContact(contact)');
-    console.log(contact);
-
-    window.mContactManager.findContact({
-        filterBy: ['name'],
-        filterValue: contact.name + ' ' + contact.surname,
-        filterOp: 'equals'
-    }, function(contactsFound) {
-
-        /* Get contact photo */
-        var xhr = new XMLHttpRequest();
-
-        xhr.open("GET", contact.photo, true);
-        xhr.responseType = "arraybuffer";
-
-        xhr.onload = function(e) {
-            var arrayBufferView = new Uint8Array(this.response);
-            var contactPhoto = new Blob([arrayBufferView], {type: "image/jpeg"});
-
-            if (contactsFound.length === 0) {
-                /* Add contact */
-                window.mContactManager.addContact({
-                    name: [contact.name + ' ' + contact.surname],
-                    givenName: [contact.name],
-                    familyName: [contact.surname],
-                    nickname: [contact.nickname],
-                    photo: [contactPhoto],
-                    note: [contact.location]
-                }, function() {
-                    // do nothing
-                }, function() {
-                    // do nothing
-                });
-            }
-            else {
-                console.log(contact.name + ' ' + contact.surname + ' already exists');
-            }
-        };
-
-        xhr.send();
+    });
+    
+    JS.getBlobFromImagePath("img/chrisdavidmills.jpg", function(blob) {
+        window.mContactManager.addContact({
+            name: ["Chris Mills"],
+            givenName: ["Chris"],
+            familyName: ["Mills"],
+            nickname: ["chrisdavidmills"],
+            photo: [blob],
+            adr: [{
+                    locality: "Oldham",
+                    countryName: "UK"
+                }]
+        },
+        function() {
+            console.log('Contact added successfully');
+        }, function() {
+            console.log('Error adding contact to the address book');
+        });
+    });
+    
+    JS.getBlobFromImagePath("img/franciov.jpeg", function(blob) {
+        window.mContactManager.addContact({
+            name: ["Francesco Iovine"],
+            givenName: ["Francesco"],
+            familyName: ["Iovine"],
+            nickname: ["franciov"],
+            photo: [blob],
+            adr: [{
+                    locality: "Rome",
+                    countryName: "Italy"
+                }]
+        },
+        function() {
+            console.log('Contact added successfully');
+        }, function() {
+            console.log('Error adding contact to the address book');
+        });
     });
 }
 

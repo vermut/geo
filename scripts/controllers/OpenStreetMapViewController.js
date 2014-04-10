@@ -110,10 +110,12 @@ OpenStreetMapViewController.prototype = {
             return;
         }
 
+        /* If query is a mozContact */
         var contact = null;
         if (window.mContactManager.isContact(query)) {
+            /* Save the contact and build a query search string */
             contact = query;
-            query = query.note[0];
+            query = window.mContactManager.contactAddressToString(contact);
         }
 
         /* Prepare AJAX communication with nominatim */
@@ -143,7 +145,7 @@ OpenStreetMapViewController.prototype = {
                                 
                 var markerDescription = response[0].display_name;            
                 if (contact) {
-                    markerDescription = contact.name[0] + '<br/>' + contact.note[0];
+                    markerDescription = contact.name[0] + '<br/>' + contact.adr[0];
                 }
                 else {
                     /* Print place found */

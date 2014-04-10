@@ -1,7 +1,7 @@
 
 function MapSwitcherViewController() {
     console.log('MapSwitcherViewController()');
-
+    
     /* Map containers's DOM objects */
     this.openstreetmapViewControllerBox = document.querySelector('#openstreetmap');
     this.googlemapViewControllerBox = document.querySelector('#googlemap');
