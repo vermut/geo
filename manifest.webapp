@@ -12,7 +12,7 @@
     },
     "contacts": {
       "description": "Required for plotting contacts on the map",
-      "access": "readcreate"
+      "access": "readwrite"
     }
   },
   "developer": {

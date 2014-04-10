@@ -88,7 +88,6 @@ OpenStreetMapViewController.prototype = {
             /* Keep track of the current position */
             this.currentPosition = osmPosition;
         }
-
     },
     /*
      * handleGeolocationErrors
@@ -106,6 +105,7 @@ OpenStreetMapViewController.prototype = {
     search: function(query) {
         MapViewController.prototype.search.call(this, query);
 
+        /* Quit search if no query */
         if (query === undefined || query === '') {
             return;
         }
@@ -153,7 +153,7 @@ OpenStreetMapViewController.prototype = {
                 }
 
                 var markerImage = 'libs/OpenLayers/img/marker.png';
-                if (contact && contact.photo) {
+                if (contact && contact.photo && contact.photo.length > 0) {
                     markerImage = window.URL.createObjectURL(contact.photo[0]);
                 }
 

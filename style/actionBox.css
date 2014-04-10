@@ -116,9 +116,6 @@
     color: white;
 }
 
-.actionBox > div.searchBox #nominatimSearch {
-    display:block;
-}
 .actionBox > div.searchBox #nominatimSearch input {
     width: 98%;
 }
@@ -132,7 +129,6 @@
 }
 
 .actionBox > div.searchBox #contactSearch {
-    display:none;
     width: 100%;
 }
 .actionBox > div.searchBox #contactSearch input {

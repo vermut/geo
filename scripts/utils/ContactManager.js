@@ -1,10 +1,8 @@
 
 function ContactManager() {
-    console.log('ContactsManager()');
+    console.log('ContactManager()');
 
     this.mozContactManager = window.navigator.mozContacts;
-
-    this.contacts = [];
 }
 
 ContactManager.prototype = {
@@ -26,7 +24,7 @@ ContactManager.prototype = {
         return false;
     },
     addContact: function(contact, successCallBack, errorCallback) {
-        console.log('ContactsManager.addContact(contact, successCallBack, errorCallback)');
+        console.log('ContactManager.addContact(contact, successCallBack, errorCallback)');
         console.log(contact);
 
         if (this.isContactsApiSupported() === false) {
@@ -67,47 +65,52 @@ ContactManager.prototype = {
             return;
         });
     },
-    updateAddress: function(contact, address, successCallBack, errorCallback) {
-        console.log('ContactsManager.updateAddress(contact, address, successCallBack, errorCallback)');
-        console.log(contact);
+    addAddressToContact: function(address, contact, successCallback, errorCallback) {
+        console.log('ContactManager.addAddressToContact(address, contact, successCallBack, errorCallback)');
         console.log(address);
+        console.log(contact);
 
         if (this.isContactsApiSupported() === false) {
             return;
         }
 
-        contact.adr = [address];
+        contact.adr = [{
+                streetAddress: address
+            }];
 
         var saving = this.mozContactManager.save(contact);
 
         saving.onsuccess = function() {
-            console.log(contact.name[0] + ' updated');
-            successCallBack();
+            console.log('the address was inserted correctly');
+            successCallback();
         };
 
         saving.onerror = function(error) {
+            console.log("error in inserting address");
             console.log(error);
             errorCallback();
         };
     },
     contactAddressToString: function(contact) {
+        console.log('ContactManager.contactAddressToString(contact)');
+        console.log(contact);
+        
         /* Build a query search string */
         var contactAddress = contact.adr[0];
         var addressString = '';
-        
+
         console.log(contactAddress);
-        console.log(contactAddress.toString());
-        
+
         addressString += contactAddress.streetAddress ? (contactAddress.streetAddress + ' ') : '';
         addressString += contactAddress.locality ? (contactAddress.locality + ' ') : '';
         addressString += contactAddress.region ? (contactAddress.region + ' ') : '';
         addressString += contactAddress.postalCode ? (contactAddress.postalCode + ' ') : '';
         addressString += contactAddress.countryName ? (contactAddress.countryName + ' ') : '';
-        
+
         return addressString;
     },
     findContact: function(filter, successCallback, errorCallback) {
-        console.log('ContactsManager.findContact(filter)');
+        console.log('ContactManager.findContact(filter)');
         console.log(filter);
 
         if (this.isContactsApiSupported() === false) {
@@ -128,14 +131,12 @@ ContactManager.prototype = {
         };
     },
     getAllContacts: function(successCallback, errorCallback) {
-        console.log('ContactsManager.getAllContacts()');
+        console.log('ContactManager.getAllContacts()');
 
         if (this.isContactsApiSupported() === false) {
             errorCallback();
             return;
         }
-
-        console.log('ContactsManager.getAll()');
 
         var allContacts = this.mozContactManager.getAll({
             // no options
@@ -154,7 +155,7 @@ ContactManager.prototype = {
         };
     },
     removeContact: function(contact) {
-        console.log('ContactsManager.removeContact()');
+        console.log('ContactManager.removeContact()');
 
         if (this.isContactsApiSupported() === false) {
             return;
@@ -171,7 +172,7 @@ ContactManager.prototype = {
         };
     },
     clearContacts: function() {
-        console.log('ContactsManager.clearContacts()');
+        console.log('ContactManager.clearContacts()');
 
         if (this.isContactsApiSupported() === false) {
             return;

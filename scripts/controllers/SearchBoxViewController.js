@@ -27,8 +27,6 @@ function SearchBoxViewController() {
         return false;
     };
 
-    self.showContactSearch(); // TODO: css
-
     /* Init contact search if address book is not empty */
     window.mContactManager.getAllContacts(function(contact) {
         console.log("Retrieving contact from the address book");
@@ -46,11 +44,12 @@ SearchBoxViewController.prototype = {
      * @param {String} query
      */
     search: function(query) {
-        console.log('SearchBoxViewController.search(' + query + ')');
+        console.log('SearchBoxViewController.search(query)');
+        console.log(query);
 
         var contactName = this.contactSearchInput.value;
 
-        if (contactName !== '' && query instanceof String) {
+        if (contactName !== '' && window.mContactManager.isContact(query) === false) {
             window.mContactManager.findContact({
                 filterBy: ['name'],
                 filterValue: contactName,
@@ -59,15 +58,15 @@ SearchBoxViewController.prototype = {
                 if (contactsFound.length > 0) {
                     var contact = contactsFound[0];
 
-                    if (contact.adr) {
+                    if (contact.adr && contact.adr.length > 0) {
                         console.log(contactName + ' has already an address');
                     }
                     else {
                         // update the contact
-                        window.mContactManager.updateAddress(contact, query, function() {
-                            alert("address updated");
+                        window.mContactManager.addAddressToContact(query, contact, function() {
+                            alert("The address was inserted correctly");
                         }, function() {
-                            alert("error in updating address");
+//                            alert("Error in inserting address");
                         });
                     }
                 }
@@ -75,7 +74,7 @@ SearchBoxViewController.prototype = {
                     alert(contactName + ' not found in address book');
                 }
             }, function() { // error callback
-
+                console.log("contact not found");
             });
         }
 
@@ -93,7 +92,8 @@ SearchBoxViewController.prototype = {
      * @param {String} query
      */
     searchContact: function(query) {
-        console.log('SearchBoxViewController.searchContact(' + query + ')');
+        console.log('SearchBoxViewController.searchContact(query)');
+        console.log(query);
 
         var self = this;
 
@@ -109,11 +109,11 @@ SearchBoxViewController.prototype = {
 
                     self.contactSearchInput.value = contact.name[0];
 
-                    if (contact.adr) {
+                    if (contact.adr && contact.adr.length > 0) {
                         self.search(contact);
                     }
                     else {
-                        alert(contact.name[0] + " has not provided a address. You can now insert a address by searching it.");
+                        alert('No address specified for ' + contact.name[0] + ". Insert a address and click Search to add it to the contact");
                     }
                 }
                 else {
