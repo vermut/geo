@@ -28,7 +28,10 @@ function SearchBoxViewController() {
     };
 
     window.mContactManager.getAllContacts(function(contact) {
+        self.showContactSearch();
         self.contactDatalist.innerHTML = self.contactDatalist.innerHTML + '<option>' + contact.name + '</option>';
+    }, function() {
+        alert("Error in retrieving contacts from the address book");
     });
 }
 
@@ -142,10 +145,6 @@ SearchBoxViewController.prototype = {
         this.googleSearch.style.display = 'none';
         this.hybridSearch.style.display = 'none';
         this.nominatimSearch.style.display = 'block';
-
-        if (window.mContactManager.isContactsApiSupported()) {
-            this.showContactSearch();
-        }
     },
     /*
      * showGoogleSearch
