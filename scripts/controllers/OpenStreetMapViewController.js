@@ -101,13 +101,19 @@ OpenStreetMapViewController.prototype = {
     /*
      * search
      * Perform the search based on the specified query
-     * @param {String} query
+     * @param {String || mozContact} query
      */
-    search: function(query, markerImage, showPOIs) {
-        MapViewController.prototype.search.call(this, query, markerImage, showPOIs);
+    search: function(query) {
+        MapViewController.prototype.search.call(this, query);
 
         if (query === undefined || query === '') {
             return;
+        }
+        
+        var contact = null;
+        if (query instanceof mozContact) {
+            contact = query;            
+            query = query.note[0];
         }
 
         /* Prepare AJAX communication with nominatim */
@@ -135,13 +141,34 @@ OpenStreetMapViewController.prototype = {
                 var rlat = response[0].lat - 0;
 
                 var position = new OpenLayers.LonLat(rlon, rlat).transform(self.fromProjection, self.toProjection);
-                var markerIcon = new OpenLayers.Icon((markerImage instanceof Blob) ? window.URL.createObjectURL(markerImage) : 'libs/OpenLayers/img/marker.png');
+
+                var markerImage = 'libs/OpenLayers/img/marker.png';
+
+                if (contact && contact.photo) {
+                    markerImage = window.URL.createObjectURL(contact.photo[0]);
+                }
+
+                var markerIcon = new OpenLayers.Icon(markerImage);
                 var marker = new OpenLayers.Marker(position, markerIcon);
 
                 /* Set the center of the map */
                 self.map.setCenter(position);
 
-                if (showPOIs) {
+                if (contact) {
+                    /* Add a popup window */
+                    marker.popup = new OpenLayers.Popup.FramedCloud("osmpopup",
+                            position,
+                            new OpenLayers.Size(200, 200),
+                            '<p>' + contact.name[0] + '</p><p>' + contact.note[0] + '</p>'  ,
+                            null,
+                            true);
+
+                    marker.events.register("click", marker, function(e) {
+
+                        self.map.addPopup(this.popup);
+                    });
+                }
+                else {
                     /* Remove existing markers */
                     self.markers.clearMarkers();
 
@@ -154,7 +181,7 @@ OpenStreetMapViewController.prototype = {
 
                 /* Add a marker on the place found */
                 self.markers.addMarker(marker);
-                
+
                 /* Adapt map zoom */
                 var newBound = self.markers.getDataExtent();
                 self.map.zoomToExtent(newBound);

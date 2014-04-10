@@ -38,13 +38,14 @@ SearchBoxViewController.prototype = {
      * Submit the query to the search engine of the map displayed and show the search results on the map
      * @param {String} query
      */
-    search: function(query, markerImage, showPOIs) {
+    search: function(query) {
         console.log('SearchBoxViewController.search(' + query + ')');
 
         var self = this;
 
         var contactName = this.contactSearchInput.value;
-        if (contactName !== '') {
+
+        if (contactName !== '' && query instanceof String) {
             window.mContactManager.findContact({
                 filterBy: ['name'],
                 filterValue: contactName,
@@ -53,12 +54,17 @@ SearchBoxViewController.prototype = {
                 if (contactsFound.length > 0) {
                     var contact = contactsFound[0];
 
-                    // update the contact
-                    window.mContactManager.updateAddress(contact, query, function() {
-                        alert("address updated");
-                    }, function() {
-                        alert("error in updating address");
-                    });
+                    if (contact.note) {
+                        console.log(contactName + ' has already an address');
+                    }
+                    else {
+                        // update the contact
+                        window.mContactManager.updateAddress(contact, query, function() {
+                            alert("address updated");
+                        }, function() {
+                            alert("error in updating address");
+                        });
+                    }
                 }
                 else {
                     alert(contactName + ' not found in address book');
@@ -68,7 +74,7 @@ SearchBoxViewController.prototype = {
 
         /* Perform the search if a query is specified */
         if (query) {
-            window.mMapViewController.search(query, markerImage, showPOIs);
+            window.mMapViewController.search(query);
         }
         else {
             alert("Please insert a address");
@@ -97,7 +103,7 @@ SearchBoxViewController.prototype = {
                     self.contactSearchInput.value = contact.name[0];
 
                     if (contact.note) {
-                        self.search(contact.note[0], contact.photo[0], false);
+                        self.search(contact);
                     }
                     else {
                         alert(contact.name[0] + " has not provided a address. You can now insert a address by searching it.");
@@ -123,12 +129,7 @@ SearchBoxViewController.prototype = {
 
         window.mContactManager.getAllContacts(function(contact) {
             if (contact.note) {
-                if (contact.photo) {
-                    self.search(contact.note[0], contact.photo[0]);
-                }
-                else {
-                    self.search(contact.note[0]);
-                }
+                self.search(contact);
             }
         });
     },
