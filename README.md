@@ -8,7 +8,7 @@ You can try it in the [Firefox OS Simulator](https://developer.mozilla.org/en/do
 
 ## Notes
 
-Geo-contacts uses the Contacts API to access the address book to show all contacts on the map, look for a contact and insert a address if not provided.
+Geo-contacts uses the [Contacts API](https://developer.mozilla.org/en-US/docs/WebAPI/Contacts) to access the address book to show all contacts on the map, look for a contact and insert a address if not provided.
 
 This demo is part of [this MDN page](https://developer.mozilla.org/en-US/Apps/Developing/gather_and_modify_data/Updating_phone_contacts_from_the_web) that explains how to use the Contacts API in a Open Web App.
 
