@@ -145,7 +145,7 @@ OpenStreetMapViewController.prototype = {
                                 
                 var markerDescription = response[0].display_name;            
                 if (contact) {
-                    markerDescription = contact.name[0] + '<br/>' + contact.adr[0];
+                    markerDescription = contact.name[0] + '<br/>' + window.mContactManager.contactAddressToString(contact);
                 }
                 else {
                     /* Print place found */
