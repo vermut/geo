@@ -39,21 +39,21 @@ GeolocationViewController.prototype = {
     /*
      * getPositionOptions
      * Return the customized options for the Geolocation API
-     * @return {Object} options
+     * @return {PositionOptions} options
      */
     getPositionOptions: function() {
         console.log('GeolocationViewController.getPositionOptions()');
         
         var enableHighAccuracy = this.enableHighAccuracyInput.checked;
-        
+
         var timeout = this.defaultTimeout;
         if (this.timeoutInput.value && this.timeoutInput.value !== "") {
-            timeout = this.timeoutInput.value;
+            timeout = parseInt(this.timeoutInput.value);
         }
         
         var maximumAge = this.defaultMaximumAge;
         if (this.maximumAgeInput.value && this.maximumAgeInput.value !== "") {
-            maximumAge = this.maximumAgeInput.value;
+            maximumAge = parseInt(this.maximumAgeInput.value);
         }
         
         var options = {
