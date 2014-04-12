@@ -117,7 +117,7 @@
 }
 
 .actionBox > div.searchBox #nominatimSearch input {
-    width: 98%;
+    width: 97%;
 }
 
 .actionBox > div.searchBox #googleSearch {
@@ -128,10 +128,16 @@
     display:none;
 }
 
-.actionBox > div.searchBox #contactSearch {
+.actionBox > #contactSearch {
     width: 100%;
 }
-.actionBox > div.searchBox #contactSearch input {
+.actionBox > #contactSearch input {
     height: 2.4em;
-    width: 98%;
+    width: 97%;
+}
+.actionBox > #contactSearch button {
+    display: block;
+    width: 100%;
+    background: navy;
+    color: white;
 }

@@ -51,17 +51,17 @@
                     <div id="hybridSearch">
                         <input placeholder="Address" autocomplete="off" />
                     </div>
-                    <div id="contactSearch">
-                        <form>
-                            <input placeholder="Contact name" list="contacts" />
-                            <datalist id="contacts">
-                                <option>Francesco Iovine</option>
-                            </datalist>
-                            <button id="contactSearchBtn">Show on map</button>
-                            <button id="contactShowAllBtn">Show all contacts</button>
-                        </form>
-                    </div>
                 </div>
+            </div>
+            <div id="contactSearch">
+                <form>
+                    <input placeholder="Contact name" list="contacts" />
+                    <datalist id="contacts">
+                        <option>Francesco Iovine</option>
+                    </datalist>
+                    <button id="contactSearchBtn">Show on map</button>
+                    <button id="contactShowAllBtn">Show all contacts</button>
+                </form>
             </div>
         </div>
 
@@ -73,12 +73,12 @@
 
         <script src="libs/OpenLayers/OpenLayers.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-        
+
         <script src="scripts/utils/JS.js"></script>
         <script src="scripts/utils/ContactManager.js"></script>
         <script src="scripts/utils/GeolocationManager.js"></script>
         <script src="scripts/utils/MapViewControllerFactory.js"></script>
-        
+
         <script src="scripts/controllers/MapViewController.js"></script>
         <script src="scripts/controllers/OpenStreetMapViewController.js"></script>
         <script src="scripts/controllers/GoogleMapViewController.js"></script>
@@ -86,7 +86,7 @@
         <script src="scripts/controllers/MapSwitcherViewController.js"></script>
         <script src="scripts/controllers/GeolocationViewController.js"></script>
         <script src="scripts/controllers/SearchBoxViewController.js"></script>
-        
+
         <script src="scripts/start.js"></script>
     </body>
 </html>
