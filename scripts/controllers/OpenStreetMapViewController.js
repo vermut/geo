@@ -139,8 +139,8 @@ OpenStreetMapViewController.prototype = {
                 console.log(response[0]);
 
                 /* Take the first result and get geo infos */
-                var rlon = response[0].lon - 0;
-                var rlat = response[0].lat - 0;
+                var rlon = parseFloat(response[0].lon);
+                var rlat = parseFloat(response[0].lat);
                 var position = new OpenLayers.LonLat(rlon, rlat).transform(self.fromProjection, self.toProjection);
                                 
                 var markerDescription = response[0].display_name;            
