@@ -6,13 +6,25 @@ function ContactManager() {
 }
 
 ContactManager.prototype = {
+    /*
+     * isContactsApiSupported
+     * Checks whether the Contacts API is supported
+     * @returns {Boolean}
+     */
     isContactsApiSupported: function() {
 
         if (this.mozContactManager) {
             return true;
         }
+
         return false;
     },
+    /*
+     * isContact
+     * Checks whether the contact passed as parameter is a mozContact
+     * @param {mozContact?} contact
+     * @returns {Boolean}
+     */
     isContact: function(contact) {
 
         if (this.isContactsApiSupported()) {
@@ -23,6 +35,13 @@ ContactManager.prototype = {
 
         return false;
     },
+    /*
+     * addContact
+     * Adds a contact to the address book
+     * @param {mozContact} contact
+     * @param {Function} successCallBack
+     * @param {Function} errorCallback
+     */
     addContact: function(contact, successCallBack, errorCallback) {
         console.log('ContactManager.addContact(contact, successCallBack, errorCallback)');
         console.log(contact);
@@ -65,6 +84,14 @@ ContactManager.prototype = {
             return;
         });
     },
+    /*
+     * addAddressToContact
+     * Adds address info to a contact
+     * @param {String} address
+     * @param {mozContact} contact
+     * @param {Function} successCallback
+     * @param {Function} errorCallback
+     */
     addAddressToContact: function(address, contact, successCallback, errorCallback) {
         console.log('ContactManager.addAddressToContact(address, contact, successCallBack, errorCallback)');
         console.log(address);
@@ -91,10 +118,16 @@ ContactManager.prototype = {
             errorCallback();
         };
     },
+    /*
+     * contactAddressToString
+     * Makes a contact address printable as a string
+     * @param {type} contact
+     * @returns {String}˙
+     */
     contactAddressToString: function(contact) {
         console.log('ContactManager.contactAddressToString(contact)');
         console.log(contact);
-        
+
         /* Build a query search string */
         var contactAddress = contact.adr[0];
         var addressString = '';
@@ -109,6 +142,13 @@ ContactManager.prototype = {
 
         return addressString;
     },
+    /*
+     * findContact
+     * Finds a contact in the address book
+     * @param {Object} filter
+     * @param {Function} successCallback
+     * @param {Function} errorCallback
+     */
     findContact: function(filter, successCallback, errorCallback) {
         console.log('ContactManager.findContact(filter)');
         console.log(filter);
@@ -130,6 +170,12 @@ ContactManager.prototype = {
             errorCallback();
         };
     },
+    /*
+     * getAllContacts
+     * Retrieves all contacts from the address book
+     * @param {Function} successCallback
+     * @param {Function} errorCallback
+     */
     getAllContacts: function(successCallback, errorCallback) {
         console.log('ContactManager.getAllContacts()');
 
@@ -154,6 +200,13 @@ ContactManager.prototype = {
             errorCallback();
         };
     },
+    /*
+     * removeContact
+     * Removes a contact from the address book
+     * @param {mozContact} contact
+     * @param {Function} successCallback
+     * @param {Function} errorCallback
+     */
     removeContact: function(contact) {
         console.log('ContactManager.removeContact()');
 
@@ -171,6 +224,12 @@ ContactManager.prototype = {
             console.log('No contacts were removed.');
         };
     },
+    /*
+     * clearContacts
+     * Removes all contacts from the address book
+     * @param {Function} successCallback
+     * @param {Function} errorCallback
+     */
     clearContacts: function() {
         console.log('ContactManager.clearContacts()');
 
