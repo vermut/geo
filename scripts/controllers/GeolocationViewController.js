@@ -9,7 +9,7 @@ function GeolocationViewController() {
     this.maximumAgeInput = document.querySelector('.positionOptions #maximumAge');
 
     /* Default option values */
-    this.defaultEnableHighAccuracy = this.enableHighAccuracyInput.checked; // as configured in the HTML
+    this.defaultEnableHighAccuracy = false;
     this.defaultTimeout = 8000; // 8 seconds
     this.defaultMaximumAge = 0; // 0 seconds, no-cache
     
@@ -44,15 +44,18 @@ GeolocationViewController.prototype = {
     getPositionOptions: function() {
         console.log('GeolocationViewController.getPositionOptions()');
         
-        var enableHighAccuracy = this.enableHighAccuracyInput.checked;
+        var enableHighAccuracy = this.defaultEnableHighAccuracy;
+        if (this.enableHighAccuracyInput) {
+            enableHighAccuracy = this.enableHighAccuracyInput.checked;
+        }
 
         var timeout = this.defaultTimeout;
-        if (this.timeoutInput.value && this.timeoutInput.value !== "") {
+        if (this.timeoutInput && this.timeoutInput.value && this.timeoutInput.value !== "") {
             timeout = parseInt(this.timeoutInput.value);
         }
         
         var maximumAge = this.defaultMaximumAge;
-        if (this.maximumAgeInput.value && this.maximumAgeInput.value !== "") {
+        if (this.maximumAgeInput && this.maximumAgeInput.value && this.maximumAgeInput.value !== "") {
             maximumAge = parseInt(this.maximumAgeInput.value);
         }
         
