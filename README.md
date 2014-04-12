@@ -1,22 +1,20 @@
-# Geo
+# Geo-contacts
 
-Geo is a geolocation web application. It let users choose among OpenStreetMap, Google Maps, and a hybrid map that is a Google Map with OpenStreetMap tiles placed on it. 
+Geo-contacts is a geolocation app for Firefox OS that let you show your contacts on the map.
 
-![Screenshot](https://mdn.mozillademos.org/files/7175/osm-search.png)
+![Screenshot](https://raw.githubusercontent.com/franciov/geo/mdn_updating_phone_contacts_from_the_web/img/screenshots/contacts-all.png)
 
-Try it [live](http://goo.gl/FVhr5L).
+You can try it in the [Firefox OS Simulator](https://developer.mozilla.org/en/docs/Tools/Firefox_OS_Simulator).
 
 ## Notes
 
-The web app uses the Geolocation API to get the current position with the possibility for the user to choose the options (enableHighAccuracy, timeout, maximumAge) by user interface. The demo also provides a search tool that uses the Google Searchbox in the case of Google and Hybrid maps and pure XmlHttpRequests to Nominatim in the case of OpenStreetMap.
+Geo-contacts uses the Contacts API to access the address book to show all contacts on the map, look for a contact and insert a address if not provided.
 
-This demo is part of [this MDN page](https://developer.mozilla.org/en-US/Apps/Developing/gather_and_modify_data/Plotting_yourself_on_the_map) that explains how to use interactive maps in a Open Web App.
+This demo is part of [this MDN page](https://developer.mozilla.org/en-US/Apps/Developing/gather_and_modify_data/Updating_phone_contacts_from_the_web) that explains how to use the Contacts API in a Open Web App.
 
 ## Contributing
 
-- navigator (watchPosition)
-- route
-- FxOS installer
+- autocomplete on contact search
 - better look&feel
 - add tests
 - open github issues
