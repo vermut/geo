@@ -2,7 +2,7 @@
 function ContactManager() {
     console.log('ContactManager()');
 
-    this.mozContactManager = window.navigator.mozContacts;
+    this.contactManagerInterface = window.navigator.mozContacts;
 }
 
 ContactManager.prototype = {
@@ -13,7 +13,7 @@ ContactManager.prototype = {
      */
     isContactsApiSupported: function() {
 
-        if (this.mozContactManager) {
+        if (this.contactManagerInterface) {
             return true;
         }
 
@@ -63,7 +63,7 @@ ContactManager.prototype = {
             if (contactsFound.length === 0) {
                 /* Add contact */
 
-                var saving = self.mozContactManager.save(new mozContact(contact));
+                var saving = self.contactManagerInterface.save(new mozContact(contact));
 
                 saving.onsuccess = function() {
                     console.log('new contact saved');
@@ -105,7 +105,7 @@ ContactManager.prototype = {
                 streetAddress: address
             }];
 
-        var saving = this.mozContactManager.save(contact);
+        var saving = this.contactManagerInterface.save(contact);
 
         saving.onsuccess = function() {
             console.log('the address was inserted correctly');
@@ -158,7 +158,7 @@ ContactManager.prototype = {
             return;
         }
 
-        var request = this.mozContactManager.find(filter);
+        var request = this.contactManagerInterface.find(filter);
 
         request.onsuccess = function() {
             console.log(this.result.length + ' contacts found.');
@@ -184,7 +184,7 @@ ContactManager.prototype = {
             return;
         }
 
-        var allContacts = this.mozContactManager.getAll({
+        var allContacts = this.contactManagerInterface.getAll({
             // no options
         });
 
@@ -214,7 +214,7 @@ ContactManager.prototype = {
             return;
         }
 
-        var request = this.mozContactManager.clear(contact);
+        var request = this.contactManagerInterface.clear(contact);
 
         request.onsuccess = function() {
             console.log('The contact have been removed.');
@@ -237,7 +237,7 @@ ContactManager.prototype = {
             return;
         }
 
-        var request = this.mozContactManager.clear();
+        var request = this.contactManagerInterface.clear();
 
         request.onsuccess = function() {
             console.log('All contacts have been removed.');
