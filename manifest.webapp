@@ -8,7 +8,7 @@
   "launch_path": "/index.html",
   "permissions": {
     "geolocation": {
-      "description": "Required for autocompletion in the share screen"
+      "description": "Required for getting current position"
     },
     "contacts": {
       "description": "Required for plotting contacts on the map",
