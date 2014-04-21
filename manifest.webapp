@@ -3,7 +3,7 @@
   "description": "Geolocation web application",
   "type": "privileged",
   "icons": {
-    "128": "/public_html/img/icon-128.png"
+    "128": "/img/icon-128.png"
   },
   "launch_path": "/index.html",
   "permissions": {
