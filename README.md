@@ -14,9 +14,10 @@ This demo is part of [this MDN page](https://developer.mozilla.org/en-US/Apps/De
 
 ## Contributing
 
+- open github issues
+- fix github issues
+- add tests
+- better look&feel
 - navigator (watchPosition)
 - route
 - FxOS installer
-- better look&feel
-- add tests
-- open github issues
