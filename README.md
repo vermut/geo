@@ -12,8 +12,8 @@ You can try it [live](http://goo.gl/FVhr5L) or in the [Firefox OS Simulator](htt
 ## Notes
 
 This demo is part of the following MDN articles:
-- [Plotting yourself on the map](https://developer.mozilla.org/en-US/Apps/Developing/gather_and_modify_data/Plotting_yourself_on_the_map) that explains how to use interactive maps in Open Web Apps.
-- [Updating phone contacts from the web](https://developer.mozilla.org/en-US/Apps/Developing/gather_and_modify_data/Updating_phone_contacts_from_the_web) that explains how to use the [Contacts API](https://developer.mozilla.org/en-US/docs/WebAPI/Contacts) in Open Web Apps.
+- [Plotting yourself on the map - MDN App Center](https://developer.mozilla.org/en-US/Apps/Developing/gather_and_modify_data/Plotting_yourself_on_the_map) that explains how to use interactive maps in Open Web Apps.
+- [Updating phone contacts from the web - MDN App Center](https://developer.mozilla.org/en-US/Apps/Developing/gather_and_modify_data/Updating_phone_contacts_from_the_web) that explains how to use the [Contacts API](https://developer.mozilla.org/en-US/docs/WebAPI/Contacts) in Open Web Apps.
 
 ## Contributing
 
