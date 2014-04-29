@@ -1,4 +1,4 @@
-var JS = {
+var JSUtil = {
     extend: function(subClass, superClass) {
         var F = function() {
         };

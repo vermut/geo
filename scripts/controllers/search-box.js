@@ -1,56 +1,59 @@
 
-function SearchBoxViewController() {
-    console.log('SearchBoxViewController()');
+var SearchBox = {
+    /* 
+     * init
+     * Initialize the object
+     */
+    init: function() {
+        console.log('SearchBox.init()');
 
-    /* Initialize DOM objects */
-    this.nominatimSearch = document.querySelector('#nominatimSearch');
-    this.contactSearch = document.querySelector('#contactSearch');
-    this.googleSearch = document.querySelector('#googleSearch');
-    this.hybridSearch = document.querySelector('#hybridSearch');
+        /* Initialize DOM objects */
+        this.nominatimSearch = document.querySelector('#nominatimSearch');
+        this.contactSearch = document.querySelector('#contactSearch');
+        this.googleSearch = document.querySelector('#googleSearch');
+        this.hybridSearch = document.querySelector('#hybridSearch');
 
-    this.contactSearchInput = this.contactSearch.querySelector('#contactSearch input');
-    this.contactSearchButton = this.contactSearch.querySelector('#contactSearch button#contactSearchBtn');
-    this.contactDatalist = this.contactSearch.querySelector('#contacts');
+        this.contactSearchInput = this.contactSearch.querySelector('#contactSearch input');
+        this.contactSearchButton = this.contactSearch.querySelector('#contactSearch button#contactSearchBtn');
+        this.contactDatalist = this.contactSearch.querySelector('#contacts');
 
-    this.contactShowAllButton = this.contactSearch.querySelector('button#contactShowAllBtn');
+        this.contactShowAllButton = this.contactSearch.querySelector('button#contactShowAllBtn');
 
-    var self = this;
+        var self = this;
 
-    /* Initialize event handlers */
-    this.contactSearchInput.value = '';
-    this.contactSearchButton.onclick = function() {
-        self.searchContact(self.contactSearchInput.value);
-        return false;
-    };
-    this.contactShowAllButton.onclick = function() {
-        self.showAllContacts();
-        return false;
-    };
+        /* Initialize event handlers */
+        this.contactSearchInput.value = '';
+        this.contactSearchButton.onclick = function() {
+            self.searchContact(self.contactSearchInput.value);
+            return false;
+        };
+        this.contactShowAllButton.onclick = function() {
+            self.showAllContacts();
+            return false;
+        };
 
-    /* Init contact search if address book is not empty */
-    window.mContactManager.getAllContacts(function(contact) {
-        console.log("Retrieving contact from the address book");
-        self.contactDatalist.innerHTML = self.contactDatalist.innerHTML + '<option>' + contact.name + '</option>';
-    }, function() {
-        console.log("Error in retrieving contacts from the address book");
-        self.hideContactSearch();
-    });
-}
-
-SearchBoxViewController.prototype = {
+        /* Init contact search if address book is not empty */
+        ContactManager.getAllContacts(function(contact) {
+            console.log("Retrieving contact from the address book");
+            self.contactDatalist.innerHTML = self.contactDatalist.innerHTML + '<option>' + contact.name + '</option>';
+        }, function() {
+            console.log("Error in retrieving contacts from the address book");
+            self.hideContactSearch();
+        });
+    },
     /*
      * search
      * Submit the query to the search engine of the map displayed and show the search results on the map
      * @param {String} query
      */
     search: function(query) {
-        console.log('SearchBoxViewController.search(query)');
+        console.log('SearchBox.search(query)');
         console.log(query);
 
         var contactName = this.contactSearchInput.value;
 
-        if (contactName !== '' && window.mContactManager.isContact(query) === false) {
-            window.mContactManager.findContact({
+        if (contactName !== '' && ContactManager.isContact(query) === false) {
+            ContactManager.findContact({
                 filterBy: ['name'],
                 filterValue: contactName,
                 filterOp: 'equals'
@@ -63,7 +66,7 @@ SearchBoxViewController.prototype = {
                     }
                     else {
                         // update the contact
-                        window.mContactManager.addAddressToContact(query, contact, function() {
+                        ContactManager.addAddressToContact(query, contact, function() {
                             alert("The address was inserted correctly");
                         }, function() {
 //                            alert("Error in inserting address");
@@ -80,7 +83,7 @@ SearchBoxViewController.prototype = {
 
         /* Perform the search if a query is specified */
         if (query) {
-            window.mMapViewController.search(query);
+            window.mMap.search(query);
         }
         else {
             alert("Please insert a address");
@@ -92,14 +95,14 @@ SearchBoxViewController.prototype = {
      * @param {String} query
      */
     searchContact: function(query) {
-        console.log('SearchBoxViewController.searchContact(query)');
+        console.log('SearchBox.searchContact(query)');
         console.log(query);
 
         var self = this;
 
         /* Perform the search if a query is specified */
         if (query) {
-            window.mContactManager.findContact({
+            ContactManager.findContact({
                 filterBy: ['name'],
                 filterValue: query,
                 filterOp: 'contains'
@@ -132,11 +135,11 @@ SearchBoxViewController.prototype = {
      * Show all contacts on the map
      */
     showAllContacts: function() {
-        console.log('SearchBoxViewController.showAllContacts()');
+        console.log('SearchBox.showAllContacts()');
 
         var self = this;
 
-        window.mContactManager.getAllContacts(function(contact) {
+        ContactManager.getAllContacts(function(contact) {
             if (contact.adr) {
                 self.search(contact);
             }
@@ -147,7 +150,7 @@ SearchBoxViewController.prototype = {
      * Show the nominatim search UI
      */
     showNominatimSearch: function() {
-        console.log('SearchBoxViewController.showNominatimSearch()');
+        console.log('SearchBox.showNominatimSearch()');
         this.googleSearch.style.display = 'none';
         this.hybridSearch.style.display = 'none';
         this.nominatimSearch.style.display = 'block';
@@ -157,7 +160,7 @@ SearchBoxViewController.prototype = {
      * Show the contact search UI
      */
     showContactSearch: function() {
-        console.log('SearchBoxViewController.showContactSearch()');
+        console.log('SearchBox.showContactSearch()');
         this.contactSearch.style.display = 'block';
     },
     /*
@@ -165,7 +168,7 @@ SearchBoxViewController.prototype = {
      * Hide the contact search UI
      */
     hideContactSearch: function() {
-        console.log('SearchBoxViewController.showContactSearch()');
+        console.log('SearchBox.showContactSearch()');
         this.contactSearch.style.display = 'none';
     },
     /*
@@ -173,7 +176,7 @@ SearchBoxViewController.prototype = {
      * Show the Google search UI
      */
     showGoogleSearch: function() {
-        console.log('SearchBoxViewController.showGoogleSearch()');
+        console.log('SearchBox.showGoogleSearch()');
         this.nominatimSearch.style.display = 'none';
         this.contactSearch.style.display = 'none';
         this.hybridSearch.style.display = 'none';
@@ -184,7 +187,7 @@ SearchBoxViewController.prototype = {
      * Show the Google search UI
      */
     showHybridSearch: function() {
-        console.log('SearchBoxViewController.showHybridSearch()');
+        console.log('SearchBox.showHybridSearch()');
         this.nominatimSearch.style.display = 'none';
         this.contactSearch.style.display = 'none';
         this.googleSearch.style.display = 'none';

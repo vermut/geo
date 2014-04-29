@@ -1,6 +1,6 @@
 
-function MapViewController(options) {
-    console.log('MapViewController(options)');
+function Map(options) {
+    console.log('Map(options)');
     console.log(options);
 
     /* Attributes */
@@ -18,20 +18,20 @@ function MapViewController(options) {
     };
 }
 
-MapViewController.prototype = {
+Map.prototype = {
     /*
      * initMap
      * Initializes and show the map
      */
     initMap: function() {
-        console.log('MapViewController.initMap()');
+        console.log('Map.initMap()');
     },
     /*
      * initSearchBox
      * Initialize Search Box
      */
     initSearchBox: function() {
-        console.log('MapViewController.initSearchBox()');
+        console.log('Map.initSearchBox()');
     },
     /*
      * showPosition
@@ -39,7 +39,7 @@ MapViewController.prototype = {
      * @param {Position|OpenLayers.LonLat} position
      */
     showPosition: function(position) {
-        console.log('MapViewController.showPosition(position)');
+        console.log('Map.showPosition(position)');
         console.log(position);
     },
     /*
@@ -48,7 +48,7 @@ MapViewController.prototype = {
      * @param {Position} position
      */
     handleGeolocationErrors: function(positionError) {
-        console.log('MapViewController.handleGeolocationErrors(positionError)');
+        console.log('Map.handleGeolocationErrors(positionError)');
         console.log(positionError);
 
         if (positionError) {
@@ -70,7 +70,7 @@ MapViewController.prototype = {
      * @param {String || mozContact} query
      */
     search: function(query) {
-        console.log('MapViewController.search(query)');
+        console.log('Map.search(query)');
         console.log(query);
         
         /* Perform the search if a query is specified */
@@ -84,7 +84,7 @@ MapViewController.prototype = {
      * @param {Position|OpenLayers.LonLat} position
      */
     showPOIs: function(position) {
-        console.log('MapViewController.showPOIs(position)');
+        console.log('Map.showPOIs(position)');
         console.log(position);
     }
 };

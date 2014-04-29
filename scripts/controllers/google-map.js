@@ -1,24 +1,24 @@
 
-function GoogleMapViewController(options) { // extends MapViewController
-    MapViewController.call(this, options);
+function GoogleMap(options) { // extends Map
+    Map.call(this, options);
 
     /* Initialize superclass attributes */
     this.searchInput = document.querySelector('#googleSearch input');
     
-    /* Initialize GoogleMapViewController attributes */
+    /* Initialize GoogleMap attributes */
     this.searchBox = null;
 }
 
-/* GoogleMapViewController extends MapViewController */
-JS.extend(GoogleMapViewController, MapViewController);
+/* GoogleMap extends Map */
+JSUtil.extend(GoogleMap, Map);
 
-GoogleMapViewController.prototype = {
+GoogleMap.prototype = {
     /*
      * initMap
      * Initializes and shows the map
      */
     initMap: function() {
-        MapViewController.prototype.initMap.call(this);
+        Map.prototype.initMap.call(this);
         
         /* Set GoogleMap options */
         var mapOptions = {
@@ -40,7 +40,7 @@ GoogleMapViewController.prototype = {
      * Initialize Google Search Box
      */
     initSearchBox: function() {
-        MapViewController.prototype.initSearchBox.call(this);
+        Map.prototype.initSearchBox.call(this);
 
         this.searchBox = new google.maps.places.SearchBox(this.searchInput);
 
@@ -63,7 +63,7 @@ GoogleMapViewController.prototype = {
      * @param {Position} position
      */
     showPosition: function(position) {
-        MapViewController.prototype.showPosition.call(this, position);
+        Map.prototype.showPosition.call(this, position);
 
         /* Retrieve latitude and longitude from Position */
         var plat = position.coords.latitude;
@@ -97,7 +97,7 @@ GoogleMapViewController.prototype = {
      * @param {PositionError} positionError
      */
     handleGeolocationErrors: function(positionError) {
-        MapViewController.prototype.handleGeolocationErrors.call(this, positionError);
+        Map.prototype.handleGeolocationErrors.call(this, positionError);
     },
     /*
      * search
@@ -105,7 +105,7 @@ GoogleMapViewController.prototype = {
      * @param {String} query
      */
     search: function(query) {
-        MapViewController.prototype.search.call(this, query);
+        Map.prototype.search.call(this, query);
 
         /* Retrieve the places found and use the first one */
         var places = this.searchBox.getPlaces();
@@ -130,7 +130,7 @@ GoogleMapViewController.prototype = {
      * @param {google.maps.LatLng} position
      */
     showPOIs: function(position) {
-        MapViewController.prototype.showPOIs.call(this, position);
+        Map.prototype.showPOIs.call(this, position);
 
         /* Retrieve latitude and longitude from google.maps.LatLng */
         var plat = position.lat();

@@ -1,33 +1,33 @@
 
-function OpenStreetMapViewController(options) { // extends MapViewController
-    MapViewController.call(this, options);
+function OpenStreetMap(options) { // extends Map
+    Map.call(this, options);
 
     /* Initialize superclass attributes */
     this.searchInput = document.querySelector('#nominatimSearch input');
     this.searchButton = document.querySelector('#nominatimSearch button');
 
-    /* OpenStreetMapViewController attributes */
+    /* OpenStreetMap attributes */
     this.mapnik = null;
     this.fromProjection = null;
     this.toProjection = null;
     this.markers = null;
 }
 
-/* OpenStreetMapViewController extends MapViewController */
-JS.extend(OpenStreetMapViewController, MapViewController);
+/* OpenStreetMap extends Map */
+JSUtil.extend(OpenStreetMap, Map);
 
-OpenStreetMapViewController.prototype = {
+OpenStreetMap.prototype = {
     /*
      * initMap
      * Initializes and shows the map
      */
     initMap: function() {
-        MapViewController.prototype.initMap.call(this);
+        Map.prototype.initMap.call(this);
 
         /* Initialize superclass attributes */
         this.map = new OpenLayers.Map(this.mapId);
 
-        /* Initialize OpenStreetMapViewController attributes */
+        /* Initialize OpenStreetMap attributes */
         this.mapnik = new OpenLayers.Layer.OSM(); // This layer allows accessing OpenStreetMap tiles
         this.fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
         this.toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection        
@@ -49,13 +49,13 @@ OpenStreetMapViewController.prototype = {
      * Initialize Nominatim Search Box
      */
     initSearchBox: function() {
-        MapViewController.prototype.initSearchBox.call(this);
+        Map.prototype.initSearchBox.call(this);
 
         var self = this;
 
         /* Initialize event handlers */
         this.searchButton.onclick = function() {
-            window.mSearchBoxViewController.search(self.searchInput.value, 'libs/OpenLayers/img/marker.png', true);
+            SearchBox.search(self.searchInput.value, 'libs/OpenLayers/img/marker.png', true);
             return false;
         };
     },
@@ -95,7 +95,7 @@ OpenStreetMapViewController.prototype = {
      * @param {PositionError} position
      */
     handleGeolocationErrors: function(positionError) {
-        MapViewController.prototype.handleGeolocationErrors.call(this, positionError);
+        Map.prototype.handleGeolocationErrors.call(this, positionError);
     },
     /*
      * search
@@ -103,7 +103,7 @@ OpenStreetMapViewController.prototype = {
      * @param {String || mozContact} query
      */
     search: function(query) {
-        MapViewController.prototype.search.call(this, query);
+        Map.prototype.search.call(this, query);
 
         /* Quit search if no query */
         if (query === undefined || query === '') {
@@ -112,10 +112,10 @@ OpenStreetMapViewController.prototype = {
 
         /* If query is a mozContact */
         var contact = null;
-        if (window.mContactManager.isContact(query)) {
+        if (ContactManager.isContact(query)) {
             /* Save the contact and build a query search string */
             contact = query;
-            query = window.mContactManager.contactAddressToString(contact);
+            query = ContactManager.contactAddressToString(contact);
         }
 
         /* Prepare AJAX communication with nominatim */
@@ -145,7 +145,7 @@ OpenStreetMapViewController.prototype = {
                                 
                 var markerDescription = response[0].display_name;            
                 if (contact) {
-                    markerDescription = contact.name[0] + '<br/>' + window.mContactManager.contactAddressToString(contact);
+                    markerDescription = contact.name[0] + '<br/>' + ContactManager.contactAddressToString(contact);
                 }
                 else {
                     /* Print place found */
@@ -198,7 +198,7 @@ OpenStreetMapViewController.prototype = {
      * @param {OpenLayers.LonLat} position
      */
     showPOIs: function(position) {
-        MapViewController.prototype.showPOIs.call(this, position);
+        Map.prototype.showPOIs.call(this, position);
 
         /* Retrieve longitude and latitude from OpenLayers.LonLat */
         var plon = position.lon;

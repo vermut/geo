@@ -1,17 +1,17 @@
 
-function HybridMapViewController(options) { // extends GoogleMapViewController
-    GoogleMapViewController.call(this, options);
+function HybridMap(options) { // extends GoogleMap
+    GoogleMap.call(this, options);
 }
 
-/* HybridMapViewController extends GoogleMapViewController */
-JS.extend(HybridMapViewController, GoogleMapViewController);
+/* HybridMap extends GoogleMap */
+JSUtil.extend(HybridMap, GoogleMap);
 
 /*
  * initMap
  * Initializes and shows the map
  */
-HybridMapViewController.prototype.initMap = function() {
-    MapViewController.prototype.initMap.call(this);
+HybridMap.prototype.initMap = function() {
+    Map.prototype.initMap.call(this);
 
     /* Set GoogleMap options */
     var mapOptions = {
