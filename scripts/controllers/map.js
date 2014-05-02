@@ -1,3 +1,4 @@
+var GeoMap;
 
 function Map(options) {
     console.log('Map(options)');

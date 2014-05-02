@@ -83,7 +83,7 @@ var SearchBox = {
 
         /* Perform the search if a query is specified */
         if (query) {
-            window.mMap.search(query);
+            GeoMap.search(query);
         }
         else {
             alert("Please insert a address");

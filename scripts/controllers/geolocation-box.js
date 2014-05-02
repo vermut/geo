@@ -33,8 +33,8 @@ var GeolocationBox = {
     showCurrentPosition: function() {
         console.log('Geolocation.showCurrentPosition()');
 
-        var successCallback = window.mMap.showPosition.bind(window.mMap);
-        var errorCallback = window.mMap.handleGeolocationErrors.bind(window.mMap);
+        var successCallback = GeoMap.showPosition.bind(GeoMap);
+        var errorCallback = GeoMap.handleGeolocationErrors.bind(GeoMap);
         var positionOptions = this.getPositionOptions();
 
         GeolocationManager.getCurrentPosition(successCallback, errorCallback, positionOptions);

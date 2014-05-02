@@ -68,15 +68,15 @@ var MapSwitcher = {
             });
 
             /* Save the Map on window */
-            window.mMap = this.openstreetmap;
+            GeoMap = this.openstreetmap;
 
             /* Initializes the map and the search box */
-            window.mMap.initMap();
-            window.mMap.initSearchBox();
+            GeoMap.initMap();
+            GeoMap.initSearchBox();
         }
         else {
             /* Save the Map on window */
-            window.mMap = this.openstreetmap;
+            GeoMap = this.openstreetmap;
         }
 
     },
@@ -103,15 +103,15 @@ var MapSwitcher = {
             });
 
             /* Save the Map on window */
-            window.mMap = this.googlemap;
+            GeoMap = this.googlemap;
 
             /* Initializes the map and the search box */
-            window.mMap.initMap();
-            window.mMap.initSearchBox();
+            GeoMap.initMap();
+            GeoMap.initSearchBox();
         }
         else {
             /* Save the Map on window */
-            window.mMap = this.googlemap;
+            GeoMap = this.googlemap;
         }
 
     },
@@ -138,15 +138,15 @@ var MapSwitcher = {
             });
 
             /* Save the Map on window */
-            window.mMap = this.hybridmap;
+            GeoMap = this.hybridmap;
 
             /* Initializes the map and the search box */
-            window.mMap.initMap();
-            window.mMap.initSearchBox();
+            GeoMap.initMap();
+            GeoMap.initSearchBox();
         }
         else {
             /* Save the Map on window */
-            window.mMap = this.hybridmap;
+            GeoMap = this.hybridmap;
         }
 
     }
