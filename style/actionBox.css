@@ -63,30 +63,26 @@
  * GEOLOCATION
  */
 
-.actionBox div.geolocation {
+.actionBox > div.geolocation {
+    padding-top: 1em;
     padding-bottom: 1em;
-    float: left;
 }
 
-.actionBox div.geolocation .currentPositionBtn {
+.actionBox > div.geolocation .currentPositionBtn {
     display: block;
     float: left;
     font-size: 2rem;
     margin: 0.6rem 0.6rem 0 0;
 }
 
-.actionBox div.geolocation .positionOptions {
-    display: none;
+.actionBox > div.geolocation .positionOptions input[type="checkbox"]{
 }
 
-.actionBox div.geolocation .positionOptions input[type="checkbox"]{
-}
-
-.actionBox div.geolocation .positionOptions label {
+.actionBox > div.geolocation .positionOptions label {
     cursor: pointer;
 }
 
-.actionBox div.geolocation .positionOptions input[type="text"]{
+.actionBox > div.geolocation .positionOptions input[type="text"]{
     display: block;
     width: 60%;
 }
@@ -103,6 +99,7 @@
     width: 100%;
 }
 .actionBox > div.searchBox > div > div {
+    width: 100%;
 }
 .actionBox > div.searchBox input {
     height: 2.4em;
@@ -123,17 +120,11 @@
     width: 97%;
 }
 
-.actionBox > div.searchBox #nominatimSearch {
-    float: right;
-}
-
 .actionBox > div.searchBox #googleSearch {
-    float: right;
     display:none;
 }
 
 .actionBox > div.searchBox #hybridSearch {
-    float: right;
     display:none;
 }
 

@@ -11,18 +11,34 @@
     </head>
     <body>
         <div class="actionBox">
+            <div class="tabs">
+                <ul>
+                    <li>
+                        <a id="showOpenStreetMap" href="#showOpenStreetMap">OpenStreetMap</a>
+                    </li><li>
+                        <a id="showGoogleMap" href="#showGoogleMap">GoogleMap</a>
+                    </li><li>
+                        <a id="showHybridMap" href="#showHybridMap">HybridMap</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="geolocation">
+                <a id="currentPositionBtn" href="javascript:;">
+                    <div class="currentPositionBtn">
+                        <div class="north"></div>
+                        <div class="east"></div>
+                        <div class="south"></div>
+                        <div class="west"></div>
+                    </div>
+                </a>
+                <div class="positionOptions">
+                    <input id="enableHighAccuracy" type="checkbox" checked><label for="enableHighAccuracy">enableHighAccuracy</label>
+                    <input id="timeout" type="text" placeholder="timeout (8000 ms)">
+                    <input id="maximumAge" type="text" placeholder="maximumAge (0 ms)">
+                </div>
+            </div>
             <div class="searchBox">
                 <div>
-                    <div class="geolocation">
-                        <a id="currentPositionBtn" href="javascript:;">
-                            <div class="currentPositionBtn">
-                                <div class="north"></div>
-                                <div class="east"></div>
-                                <div class="south"></div>
-                                <div class="west"></div>
-                            </div>
-                        </a>
-                    </div>
                     <div id="nominatimSearch">
                         <form>
                             <input placeholder="Address" autocomplete="on" />
@@ -56,6 +72,7 @@
         </div>
 
         <script src="libs/OpenLayers/OpenLayers.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
         <script src="scripts/utils/js-util.js"></script>
         <script src="scripts/utils/contact-manager.js"></script>
