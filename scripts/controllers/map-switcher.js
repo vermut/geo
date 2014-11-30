@@ -67,7 +67,7 @@ var MapSwitcher = {
                 mapId: 'openstreetmap'
             });
 
-            /* Save the Map on window */
+            /* Save GeoMap */
             GeoMap = this.openstreetmap;
 
             /* Initializes the map and the search box */
@@ -75,7 +75,7 @@ var MapSwitcher = {
             GeoMap.initSearchBox();
         }
         else {
-            /* Save the Map on window */
+            /* Save GeoMap */
             GeoMap = this.openstreetmap;
         }
 
@@ -102,7 +102,7 @@ var MapSwitcher = {
                 mapId: 'googlemap'
             });
 
-            /* Save the Map on window */
+            /* Save GeoMap */
             GeoMap = this.googlemap;
 
             /* Initializes the map and the search box */
@@ -110,7 +110,7 @@ var MapSwitcher = {
             GeoMap.initSearchBox();
         }
         else {
-            /* Save the Map on window */
+            /* Save GeoMap */
             GeoMap = this.googlemap;
         }
 
@@ -137,7 +137,7 @@ var MapSwitcher = {
                 mapId: 'hybridmap'
             });
 
-            /* Save the Map on window */
+            /* Save GeoMap */
             GeoMap = this.hybridmap;
 
             /* Initializes the map and the search box */
@@ -145,7 +145,7 @@ var MapSwitcher = {
             GeoMap.initSearchBox();
         }
         else {
-            /* Save the Map on window */
+            /* Save GeoMap */
             GeoMap = this.hybridmap;
         }
 
