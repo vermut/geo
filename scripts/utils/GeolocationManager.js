@@ -15,7 +15,7 @@ GeolocationManager.prototype = {
      * @param {PositionOptions} positionOptions
      */
     getCurrentPosition: function(successCallback, errorCallback, positionOptions) {
-        console.log('GeolocationManager.getCurrentPosition(successCallback, errorCallback, options)');
+        console.log('GeolocationManager.watchPosition(successCallback, errorCallback, options)');
         console.log(successCallback);
         console.log(errorCallback);
         console.log(positionOptions);
